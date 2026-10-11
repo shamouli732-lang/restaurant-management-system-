@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Velora | Restaurant</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #faf7f2;
+    color: #25251f;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 7%;
+    background: #182820;
+    color: white;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    color: #e9bc75;
+    letter-spacing: 2px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #e9bc75;
+}
+
+.hero {
+    min-height: 430px;
+    padding: 65px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    background: linear-gradient(120deg, #182820, #304b38);
+    color: white;
+    flex-wrap: wrap;
+}
+
+.hero-text {
+    max-width: 520px;
+}
+
+.tag {
+    color: #e9bc75;
+    letter-spacing: 3px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.hero h1 {
+    font-size: clamp(38px, 6vw, 65px);
+    line-height: 1.12;
+    margin: 20px 0;
+}
+
+.hero h1 span {
+    color: #e9bc75;
+}
+
+.hero p {
+    color: #e2e5df;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 13px 23px;
+    background: #e9bc75;
+    color: #182820;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background: white;
+}
+
+.hero-image {
+    width: min(100%, 360px);
+    height: 280px;
+    object-fit: cover;
+    border-radius: 48% 48% 12px 12px;
+    border: 4px solid #e9bc75;
+}
+
+.section {
+    padding: 55px 7%;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.section-heading small {
+    color: #a56e31;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+.section-heading h2 {
+    font-size: 32px;
+    margin-top: 10px;
+}
+
+.search-box {
+    display: block;
+    margin: 0 auto 25px;
+    padding: 13px;
+    width: min(100%, 400px);
+    border: 1px solid #d8d3c9;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 22px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px #0000000c;
+    transition: transform .2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 18px;
+}
+
+.card h3 {
+    margin-bottom: 8px;
+}
+
+.card p {
+    color: #777;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    gap: 8px;
+}
+
+.price {
+    color: #a56e31;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.add-btn {
+    background: #182820;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 12px;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background: #a56e31;
+}
+
+.cart {
+    background: #eee8dc;
+    border-radius: 12px;
+    padding: 25px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.cart h3 {
+    margin-bottom: 15px;
+}
+
+.cart-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #d7d0c3;
+}
+
+.remove-btn {
+    color: #a33;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.total {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.empty {
+    color: #777;
+    padding: 12px 0;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #182820;
+    color: #ddd;
+    line-height: 1.8;
+}
+
+@media(max-width: 600px) {
+    header {
+        padding: 18px 5%;
+    }
+
+    nav {
+        width: 100%;
+    }
+
+    nav a {
+        margin: 0 8px 0 0;
+    }
+
+    .hero {
+        padding: 45px 6%;
+    }
+
+    .section {
+        padding: 45px 6%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">✦ VELORA</div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#menu">Our Menu</a>
+        <a href="#cart">My Cart 🛒 <span id="cart-count">0</span></a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+
+    <div class="hero-text">
+        <div class="tag">A TASTE WORTH REMEMBERING</div>
+
+        <h1>Good Food.<br>
+        <span>Great Mood.</span></h1>
+
+        <p>
+            Discover your favourite flavours at Velora.
+            Fresh ingredients, delicious recipes and
+            unforgettable moments — all on one plate.
+        </p>
+
+        <a class="btn" href="#menu">Explore Our Menu →</a>
+    </div>
+
+    <img class="hero-image"
+    src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=80"
+    alt="Freshly prepared restaurant food">
+</section>
+
+<section class="section" id="menu">
+
+    <div class="section-heading">
+        <small>MADE WITH LOVE</small>
+        <h2>Explore Our Menu</h2>
+        <p style="margin-top:10px;color:#777">
+            Find your favourite dish and add it to your cart.
+        </p>
+    </div>
+
+    <input
+        class="search-box"
+        id="search"
+        type="text"
+        placeholder="🔍 Search your favourite food..."
+        oninput="searchFood()">
+
+    <div class="menu" id="food-menu"></div>
+
+</section>
+
+<section class="section" id="cart">
+
+    <div class="section-heading">
+        <small>YOUR SELECTION</small>
+        <h2>Your Food Cart 🛒</h2>
+    </div>
+
+    <div class="cart">
+        <h3>Order Summary</h3>
+
+        <div id="cart-items">
+            <p class="empty">Your cart is empty. Add some delicious food!</p>
+        </div>
+
+        <div class="total">
+            Total: ₹<span id="total">0</span>
+        </div>
+
+        <button class="btn" onclick="placeOrder()">
+            Place Order →
+        </button>
+    </div>
+
+</section>
+
+<footer>
+    <div class="logo">✦ VELORA</div>
+    <p>Good food brings people together.</p>
+    <p>© 2026 Velora Restaurant | Student Project</p>
+</footer>
+
+<script>
+const foods = [
+    {
+        name: "Classic Pizza",
+        price: 199,
+        desc: "Cheesy, crispy and freshly baked.",
+        image: "photo- pizza"
+    },
+    {
+        name: "Veg Burger",
+        price: 129,
+        desc: "Crispy patty with fresh vegetables.",
+        image: "burger"
+    },
+    {
+        name: "Creamy Pasta",
+        price: 179,
+        desc: "Creamy sauce with Italian flavours.",
+        image: "pasta"
+    },
+    {
+        name: "Fresh Salad",
+        price: 99,
+        desc: "Fresh greens for a lighter meal.",
+        image: "salad"
+    },
+    {
+        name: "French Fries",
+        price: 89,
+        desc: "Golden, crispy and perfectly salted.",
+        image: "fries"
+    },
+    {
+        name: "Chocolate Dessert",
+        price: 119,
+        desc: "A sweet ending to your meal.",
+        image: "dessert"
+    }
+];
+
+const pictures = [
+    "photo-1513104890138-7c749659a591",
+    "photo-1568901346375-23c9450c58cd",
+    "photo- pasta",
+    "photo-1512621776951-a57141f2eefd",
+    "photo-1573080496219-bb080dd4f877",
+    "photo- chocolate"
+];
+
+const imageURLs = [
+    "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=500&q=80",
+    "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80",
+    "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=500&q=80",
+    "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=500&q=80",
+    "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=500&q=80",
+    "https://images.unsplash.com/photo-156 chocolate"
+];
+
+let cart = [];
+
+function renderMenu(list = foods) {
+    const menu = document.getElementById("food-menu");
+    menu.innerHTML = "";
+
+    if (list.length === 0) {
+        menu.innerHTML = "<p>No food found. Try another search.</p>";
+        return;
+    }
+
+    list.forEach(food => {
+        const index = foods.indexOf(food);
+
+        menu.innerHTML += `
+            <div class="card">
+                <img src="${imageURLs[index]}"
+                     alt="${food.name}"
+                     onerror="this.style.display='none'">
+
+                <div class="card-content">
+                    <h3>${food.name}</h3>
+                    <p>${food.desc}</p>
+
+                    <div class="card-bottom">
+                        <span class="price">₹${food.price}</span>
+                        <button class="add-btn"
+                        onclick="addToCart('${food.name}')">
+                            + Add
+                        </button>
+                    </div>
+                </div>
+            </div>`;
+    });
+}
+
+function searchFood() {
+    const term = document.getElementById("search").value.toLowerCase();
+
+    const filtered = foods.filter(food =>
+        food.name.toLowerCase().includes(term)
+    );
+
+    renderMenu(filtered);
+}
+
+function addToCart(name) {
+    const food = foods.find(item => item.name === name);
+    const existing = cart.find(item => item.name === name);
+
+    if (existing) {
+        existing.qty++;
+    } else {
+        cart.push({
+            name: food.name,
+            price: food.price,
+            qty: 1
+        });
+    }
+
+    renderCart();
+}
+
+function removeFromCart(name) {
+    cart = cart.filter(item => item.name !== name);
+    renderCart();
+}
+
+function renderCart() {
+    const container = document.getElementById("cart-items");
+
+    document.getElementById("cart-count").textContent =
+        cart.reduce((sum, item) => sum + item.qty, 0);
+
+    if (cart.length === 0) {
+        container.innerHTML =
+            '<p class="empty">Your cart is empty. Add some delicious food!</p>';
+    } else {
+        container.innerHTML = cart.map(item => `
+            <div class="cart-row">
+                <span>${item.name} × ${item.qty}</span>
+                <span>
+                    ₹${item.price * item.qty}
+                    <button class="remove-btn"
+                    onclick="removeFromCart('${item.name}')">
+                        Remove
+                    </button>
+                </span>
+            </div>
+        `).join("");
+    }
+
+    const total = cart.reduce(
+        (sum, item) => sum + item.price * item.qty, 0
+    );
+
+    document.getElementById("total").textContent = total;
+}
+
+function placeOrder() {
+    if (cart.length === 0) {
+        alert("Please add food to your cart first!");
+        return;
+    }
+
+    const total = cart.reduce(
+        (sum, item) => sum + item.price * item.qty, 0
+    );
+
+    alert(
+        "Thank you for choosing Velora!\\n" +
+        "Your order total is ₹" + total +
+        "\\nThis is a demo project. No real order was placed."
+    );
+
+    cart = [];
+    renderCart();
+}
+
+renderMenu();
+</script>
+
+</body>
+  </html>
