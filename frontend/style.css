@@ -1,0 +1,278 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #faf9f4;
+    color: #26352b;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 7%;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    color: #294635;
+}
+
+.logo span {
+    color: #a3b66d;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 12px;
+    font-size: 14px;
+}
+
+button, .btn {
+    background: #294635;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+button:hover, .btn:hover {
+    background: #82945f;
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    padding: 65px 7%;
+    gap: 40px;
+    background: #eeeee4;
+}
+
+.hero-text {
+    flex: 1;
+}
+
+.hero-text h1 {
+    font-family: Georgia, serif;
+    font-size: 65px;
+    margin: 20px 0;
+}
+
+.hero-text h1 span {
+    color: #82945f;
+}
+
+.hero-text p {
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.hero img {
+    width: 50%;
+    height: 390px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.menu {
+    text-align: center;
+    padding: 75px 7%;
+}
+
+.small {
+    color: #82945f;
+    letter-spacing: 3px;
+    font-size: 12px;
+}
+
+.menu h2, .booking h2 {
+    font-family: Georgia, serif;
+    font-size: 38px;
+    margin: 15px 0 30px;
+}
+
+.filters {
+    margin-bottom: 25px;
+}
+
+.filters button {
+    margin: 5px;
+}
+
+#search {
+    width: 280px;
+    padding: 13px;
+    border: 1px solid #ccc;
+    margin-bottom: 30px;
+}
+
+.food-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.food-card {
+    background: white;
+    padding-bottom: 20px;
+    box-shadow: 0 4px 15px #00000012;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.food-card img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+}
+
+.food-card h3 {
+    margin: 15px 5px 8px;
+}
+
+.food-card p {
+    color: #82945f;
+    margin: 10px;
+}
+
+.food-card button {
+    margin-top: 10px;
+}
+
+.about {
+    background: #eeeee4;
+    padding: 65px 7%;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.about div, .about img {
+    width: 50%;
+}
+
+.about h2 {
+    font-family: Georgia, serif;
+    font-size: 38px;
+    margin: 20px 0;
+}
+
+.about p {
+    line-height: 1.8;
+}
+
+.about img {
+    height: 300px;
+    object-fit: cover;
+    border-radius: 7px;
+}
+
+.booking {
+    padding: 70px 7%;
+    text-align: center;
+}
+
+.booking form {
+    max-width: 500px;
+    margin: auto;
+    display: grid;
+    gap: 15px;
+}
+
+.booking input, .booking select {
+    padding: 14px;
+    border: 1px solid #ddd;
+}
+
+footer {
+    background: #294635;
+    color: white;
+    text-align: center;
+    padding: 35px;
+    line-height: 2;
+}
+
+.cart {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    height: 100vh;
+    background: white;
+    padding: 30px;
+    z-index: 20;
+    box-shadow: 0 0 20px #0003;
+    transition: 0.3s;
+    overflow-y: auto;
+}
+
+.cart.open {
+    right: 0;
+}
+
+.cart h2 {
+    margin: 30px 0;
+}
+
+.cart-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.close {
+    float: right;
+}
+
+@media(max-width:700px) {
+    header {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    nav {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .hero, .about {
+        flex-direction: column;
+    }
+
+    .hero img, .about div, .about img {
+        width: 100%;
+    }
+
+    .hero-text h1 {
+        font-size: 48px;
+    }
+
+    .food-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width:420px) {
+    .food-container {
+        grid-template-columns: 1fr;
+    }
+
+    .cart {
+        width: 100%;
+    }
+}
