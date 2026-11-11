@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELORA Restaurant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">VELORA<span>.</span></div>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#about">About</a>
+        <a href="#booking">Reservation</a>
+    </nav>
+    <button onclick="openCart()">My Cart (<span id="count">0</span>)</button>
+</header>
+
+<section class="hero" id="home">
+    <div class="hero-text">
+        <p>WELCOME TO VELORA</p>
+        <h1>Every Plate<br>Has A <span>Story.</span></h1>
+        <p>Discover delicious food and unforgettable dining experiences.</p>
+        <a href="#menu" class="btn">Explore Menu →</a>
+    </div>
+    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=900" alt="Restaurant">
+</section>
+
+<section class="menu" id="menu">
+    <p class="small">OUR SPECIALITIES</p>
+    <h2>Explore Our Menu</h2>
+
+    <div class="filters">
+        <button onclick="filterMenu('All')">All</button>
+        <button onclick="filterMenu('Starters')">Starters</button>
+        <button onclick="filterMenu('Mains')">Main Course</button>
+        <button onclick="filterMenu('Desserts')">Desserts</button>
+        <button onclick="filterMenu('Drinks')">Drinks</button>
+    </div>
+
+    <input type="text" id="search" placeholder="Search your favourite food..." oninput="searchFood()">
+
+    <div class="food-container" id="foodContainer"></div>
+</section>
+
+<section class="about" id="about">
+    <div>
+        <p class="small">OUR STORY</p>
+        <h2>Fresh Ingredients.<br>Beautiful Moments.</h2>
+        <p>At Velora, we believe every meal should be special. 
+        We serve delicious food prepared with love and care.</p>
+    </div>
+    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800" alt="Fresh food preparation">
+</section>
+
+<section class="booking" id="booking">
+    <h2>Book Your Table</h2>
+    <p>Make your dining experience special.</p>
+
+    <form id="bookingForm">
+        <input type="text" placeholder="Your Name" required>
+        <input type="tel" placeholder="Phone Number" pattern="[0-9]{10}" required>
+        <input type="date" id="bookingDate" required>
+        <select required>
+            <option value="">Select Guests</option>
+            <option>1 Guest</option>
+            <option>2 Guests</option>
+            <option>3 Guests</option>
+            <option>4 Guests</option>
+            <option>5 Guests</option>
+        </select>
+        <button type="submit">Book Now →</button>
+    </form>
+</section>
+
+<footer>
+    <h2>VELORA.</h2>
+    <p>Good Food. Good Mood.</p>
+    <p>© 2026 Velora Restaurant. All Rights Reserved.</p>
+</footer>
+
+<div class="cart" id="cart">
+    <button class="close" onclick="closeCart()">×</button>
+    <h2>Your Order</h2>
+    <div id="cartItems"></div>
+    <h3>Total: ₹<span id="total">0</span></h3>
+    <button onclick="checkout()">Place Order</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
