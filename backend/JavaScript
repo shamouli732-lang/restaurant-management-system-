@@ -1,0 +1,230 @@
+
+const express = require("express");
+const cors = require("cors");
+const bcrypt = require("bcryptjs");
+require("dotenv").config();
+
+const db = require("./db");
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+// HOME ROUTE
+app.get("/", (req, res) => {
+    res.send("Welcome to Velora Restaurant API!");
+});
+
+// CUSTOMER REGISTRATION
+app.post("/api/register", async (req, res) => {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+        return res.status(400).json({
+            message: "All fields are required"
+        });
+    }
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        db.query(
+            "INSERT INTO customers (name,email,password) VALUES (?,?,?)",
+            [name, email, hashedPassword],
+            (err, result) => {
+                if (err) {
+                    return res.status(400).json({
+                        message: "Registration failed. Email may already exist."
+                    });
+                }
+
+                res.status(201).json({
+                    message: "Registration successful!",
+                    customerId: result.insertId
+                });
+            }
+        );
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+// CUSTOMER LOGIN
+app.post("/api/login", (req, res) => {
+    const { email, password } = req.body;
+
+    db.query(
+        "SELECT * FROM customers WHERE email = ?",
+        [email],
+        async (err, result) => {
+            if (err) {
+                return res.status(500).json({ message: "Database error" });
+            }
+
+            if (result.length === 0) {
+                return res.status(401).json({
+                    message: "Customer not found"
+                });
+            }
+
+            const customer = result[0];
+            const valid = await bcrypt.compare(
+                password,
+                customer.password
+            );
+
+            if (!valid) {
+                return res.status(401).json({
+                    message: "Invalid password"
+                });
+            }
+
+            res.json({
+                message: "Login successful!",
+                customer: {
+                    id: customer.id,
+                    name: customer.name,
+                    email: customer.email
+                }
+            });
+        }
+    );
+});
+
+// DISPLAY FOOD MENU
+app.get("/api/menu", (req, res) => {
+    db.query("SELECT * FROM menu", (err, result) => {
+        if (err) {
+            return res.status(500).json({
+                message: "Unable to load menu"
+            });
+        }
+
+        res.json(result);
+    });
+});
+
+// ADD TABLE BOOKING
+app.post("/api/bookings", (req, res) => {
+    const {
+        customer_name,
+        email,
+        booking_date,
+        booking_time,
+        guests
+    } = req.body;
+
+    if (!customer_name || !email ||
+        !booking_date || !booking_time || !guests) {
+        return res.status(400).json({
+            message: "Please fill all booking details"
+        });
+    }
+
+    db.query(
+        `INSERT INTO bookings
+        (customer_name,email,booking_date,booking_time,guests)
+        VALUES (?,?,?,?,?)`,
+        [customer_name, email, booking_date, booking_time, guests],
+        (err, result) => {
+            if (err) {
+                return res.status(500).json({
+                    message: "Booking failed"
+                });
+            }
+
+            res.status(201).json({
+                message: "Table booked successfully!",
+                bookingId: result.insertId
+            });
+        }
+    );
+});
+
+// PLACE FOOD ORDER
+app.post("/api/orders", (req, res) => {
+    const {
+        customer_name,
+        item_name,
+        quantity,
+        total_price
+    } = req.body;
+
+    if (!customer_name || !item_name ||
+        !Number.isInteger(quantity) || quantity <= 0 ||
+        !Number.isFinite(Number(total_price)) ||
+        Number(total_price) <= 0) {
+        return res.status(400).json({
+            message: "Invalid order details"
+        });
+    }
+
+    db.query(
+        `INSERT INTO orders
+        (customer_name,item_name,quantity,total_price)
+        VALUES (?,?,?,?)`,
+        [customer_name, item_name, quantity, total_price],
+        (err, result) => {
+            if (err) {
+                return res.status(500).json({
+                    message: "Order failed"
+                });
+            }
+
+            res.status(201).json({
+                message: "Order placed successfully!",
+                orderId: result.insertId
+            });
+        }
+    );
+});
+
+// CONTACT MESSAGE
+app.post("/api/contact", (req, res) => {
+    const { name, email, message } = req.body;
+
+    if (!name || !email || !message) {
+        return res.status(400).json({
+            message: "All fields are required"
+        });
+    }
+
+    db.query(
+        "INSERT INTO messages (name,email,message) VALUES (?,?,?)",
+        [name, email, message],
+        (err, result) => {
+            if (err) {
+                return res.status(500).json({
+                    message: "Message could not be sent"
+                });
+            }
+
+            res.status(201).json({
+                message: "Your message has been received!"
+            });
+        }
+    );
+});
+
+// VIEW ALL BOOKINGS
+app.get("/api/bookings", (req, res) => {
+    db.query("SELECT * FROM bookings ORDER BY id DESC",
+        (err, result) => {
+            if (err) {
+                return res.status(500).json({
+                    message: "Unable to fetch bookings"
+                });
+            }
+
+            res.json(result);
+        }
+    );
+});
+
+// START SERVER
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`Velora Server running at http://localhost:${PORT}`);
+});
